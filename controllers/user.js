@@ -1,44 +1,74 @@
 const { respnse, request } = require('express');
+const { encodePass } = require('../helpers/encryptarPass');
+const User = require('../models/user/user');
 
 
-const userGet = (req = request, res = respnse) => {
 
-    const query = req.query
+
+const userGet = async (req = request, res = respnse) => {
+
+    const { limit = 2, desde = 0 } = req.query;
+    
+    const query = { state: true }
+
+    const [ total, users ] = await Promise.all([
+        User.countDocuments(query),
+        User.find(query).skip(Number(desde)).limit(Number(limit))
+    ]);
 
     res.status(200).json({
-        msg: 'userGet -  controlador',
-        query
+        total,
+        users
     });
 
 };
 
-const userPost = (req = request, res = respnse) => {
+const userPost = async (req = request, res = respnse) => {
+    const { name, email, password, role  } = req.body;
+    const user = new User({
+        name,
+        email,
+        password,
+        role,
+    });
 
-    const body = req.body;
+    user.password = await encodePass( password );
+
+    // Guardar en BD
+    await user.save();
 
     res.status(200).json({
-        msg: 'userPost -  controlador',
-        body,
+        user,
     });
 
 };
 
-const userPut = (req = request, res = respnse) => {
+const userPut = async(req = request, res = respnse) => {
+
+    const { id } = req.params;
+    const { password, google, email, _id, ...resto  } = req.body;
+
+    // TODO: validar contra base de datos
+    if ( password ) {
+        resto.password = await encodePass( password );
+    }
+
+    const user = await User.findByIdAndUpdate( id, resto );
+
+    res.status(200).json(user);
+
+};
+
+const userDelete = async(req = request, res = respnse) => {
 
     const { id } = req.params;
 
-    res.status(200).json({
-        msg: 'userPut -  controlador',
-        id
-    });
+    // Delete Fisicamente
+    // const user = await User.findByIdAndDelete( id );
 
-};
+    const user = await User.findByIdAndUpdate( id, { state: false } );
 
-const userDelete = (req = request, res = respnse) => {
-    res.status(200).json({
-        msg: 'userDelete -  controlador'
-    });
-
+    res.status(200).json(user);
 };
 
 const userPatch = (req = request, res = respnse) => {
