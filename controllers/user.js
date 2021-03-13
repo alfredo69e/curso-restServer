@@ -56,7 +56,6 @@ const userPut = async(req = request, res = respnse) => {
     const user = await User.findByIdAndUpdate( id, resto );
 
     res.status(200).json(user);
-
 };
 
 const userDelete = async(req = request, res = respnse) => {
@@ -67,7 +66,6 @@ const userDelete = async(req = request, res = respnse) => {
     // const user = await User.findByIdAndDelete( id );
 
     const user = await User.findByIdAndUpdate( id, { state: false } );
-
     res.status(200).json(user);
 };
 
@@ -75,7 +73,6 @@ const userPatch = (req = request, res = respnse) => {
     res.status(200).json({
         msg: 'userPatch -  controlador'
     });
-
 };
 
 module.exports = {
