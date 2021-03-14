@@ -10,9 +10,9 @@ const dbConnection = async() => {
         useUnifiedTopology: true,
         useCreateIndex: true,
         useFindAndModify: false,
-        autoIndex: false,
-        serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
-        socketTimeoutMS: 20000 // Close sockets after 20 seconds of inactivity
+        // autoIndex: false,
+        // serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
+        // socketTimeoutMS: 20000 // Close sockets after 20 seconds of inactivity
       });
 
       console.log(`Base de Datos Online`);
