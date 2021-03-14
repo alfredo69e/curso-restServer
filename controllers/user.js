@@ -1,6 +1,6 @@
 const { respnse, request } = require('express');
-const { encodePass } = require('../helpers/encryptarPass');
-const User = require('../models/user/user');
+const { encodePass } = require('../helpers/encryptar-pass');
+const User = require('../models/user');
 
 
 
@@ -65,7 +65,8 @@ const userDelete = async(req = request, res = respnse) => {
     // Delete Fisicamente
     // const user = await User.findByIdAndDelete( id );
 
-    const user = await User.findByIdAndUpdate( id, { state: false } );
+    const user = await User.findByIdAndUpdate( id, { state: false }, {new: true} );
+
     res.status(200).json(user);
 };
 
