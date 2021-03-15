@@ -3,6 +3,7 @@ const Categorie = require('./categories');
 const Product = require('./products');
 const Search = require('./search');
 const User = require('./user');
+const Upload = require('./upload');
 
 
 module.exports = {
@@ -10,5 +11,6 @@ module.exports = {
     ...Categorie,
     ...Product,
     ...Search,
-    ...User
+    ...User,
+    ...Upload,
 }

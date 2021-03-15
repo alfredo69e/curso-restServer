@@ -36,6 +36,15 @@ const isExistProductId = async ( id = '') => {
   }
 };
 
+// Validar Colecciones
+const colectionPermitidas = async ( colection = '',  colections = [] ) => {
+
+  if( !colections.includes( colection ) ) {
+    throw new Error('la Coleccion no es Permitida');
+  }
+
+};
+
 
 
 
@@ -44,5 +53,6 @@ module.exports = {
     isEmailExist,
     isExisteUserId,
     isExisteCategorieId,
-    isExistProductId
+    isExistProductId,
+    colectionPermitidas
 };
