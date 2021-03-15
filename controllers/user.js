@@ -1,5 +1,5 @@
 const { respnse, request } = require('express');
-const { encodePass } = require('../helpers/encryptar-pass');
+const { encodePass } = require('../helpers');
 const User = require('../models/user');
 
 
